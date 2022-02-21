@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardView_horizontal_margin">8dp</dimen>
+    <dimen name="cardView_vertical_margin">12dp</dimen>
+    <dimen name="thumbnail_image_view"
+        >
+        48dp
+    </dimen>
+
+    <dimen name="cardView_width">120dp</dimen>
+    <dimen name="cardView_height">120dp</dimen>
+</resources>

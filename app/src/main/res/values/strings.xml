@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">File manager</string>
+    <string name="categories">Categories</string>
+    <string name="storage">Storage</string>
+    <string name="details">Details</string>
+    <string name="images">Images</string>
+    <string name="videos">Videos</string>
+    <string name="audios">Audios</string>
+    <string name="downloads">Downloads</string>
+    <string name="documents">Documents</string>
+    <string name="recents">Recents</string>
+    <string name="recent">Recent</string>
+</resources>
