@@ -97,7 +97,7 @@ class FileViewAdapter(context: Context) :
                 BitmapFactory.decodeFile(fileType.path)
             } else if (fileType.mimeType.startsWith("video")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    ThumbnailUtils.createVideoThumbnail(File(fileType.path), Size(48, 48), null)
+                    ThumbnailUtils.createVideoThumbnail(File(fileType.path), Size(480, 480), null)
                 } else {
                     ThumbnailUtils.createVideoThumbnail(
                         fileType.path,
@@ -121,14 +121,14 @@ class FileViewAdapter(context: Context) :
             } else if (fileType.mimeType.startsWith("image")) {
                 val uri: Uri = fileType.path.toUri()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    applicationContext.contentResolver.loadThumbnail(uri, Size(48, 48), null)
+                    applicationContext.contentResolver.loadThumbnail(uri, Size(480, 480), null)
                 } else {
                     TODO()
                 }
             } else if (fileType.mimeType.startsWith("video")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     val uri: Uri = fileType.path.toUri()
-                    applicationContext.contentResolver.loadThumbnail(uri, Size(48, 48), null)
+                    applicationContext.contentResolver.loadThumbnail(uri, Size(480, 480), null)
 
                 } else {
                     TODO()

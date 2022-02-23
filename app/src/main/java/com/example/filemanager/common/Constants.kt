@@ -8,12 +8,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 object Constants {
+    const val TIME_DELAY=500L
     private val fileStorage: File = getDirectory("ANDROID_STORAGE", "/storage")
     val rootPath = "${fileStorage.path}/emulated/0"
     var currentPath = rootPath
     const val TYPE_FOLDER = "folder"
     const val TYPE_UNKNOWN = "unknown"
-    const val VIDEOS = "videos"
 
 
     private fun getDirectory(variableName: String?, defaultPath: String?): File {

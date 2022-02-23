@@ -1,6 +1,5 @@
 package com.example.filemanager.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +14,7 @@ class StorageViewModel @Inject constructor(
     private val repo: MainRepository
 ) : ViewModel() {
     var files = MediatorLiveData<List<FileModel>>()
+
     fun getFiles(currentPath: String) = viewModelScope.launch {
         files.addSource(
             repo.getFiles(currentPath)
@@ -23,6 +23,18 @@ class StorageViewModel @Inject constructor(
         }
     }
 }
+
+//    fun getFiles(currentPath: String) = viewModelScope.launch {
+//        handleFiles(currentPath)
+//    }
+//
+//    private suspend fun handleFiles(currentPath: String) {
+//        files.postValue(Resource.Loading())
+//        val op=repo.getFiles(currentPath)
+//
+//
+//    }
+
 
 
 

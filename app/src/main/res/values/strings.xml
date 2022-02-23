@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">File manager</string>
+    <string name="app_name">File Manager</string>
     <string name="categories">Categories</string>
     <string name="storage">Storage</string>
     <string name="details">Details</string>
@@ -10,4 +10,6 @@
     <string name="documents">Documents</string>
     <string name="recents">Recents</string>
     <string name="recent">Recent</string>
+    <string name="search">Search</string>
+    <string name="search_here">Search Here</string>
 </resources>

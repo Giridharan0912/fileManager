@@ -17,7 +17,20 @@
         <item name="android:background">@color/black</item>
     </style>
 
+    <style name="CardviewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="elevation">
+            8dp
+        </item>
+        <item name="cardUseCompatPadding">
+            true
+        </item>
+        <item name="cardCornerRadius">
+            4dp
+        </item>
+    </style>
+
     <item name="bar_text_color" type="color">@color/white</item>
+    <item name="img_button_bg" type="color">@color/black</item>
     <color name="cardView_color">@color/pale_black</color>
 
 

@@ -12,7 +12,11 @@ import androidx.lifecycle.MutableLiveData
 import com.alphaverse.grocerymart.common.DispatchCoroutineProviders
 import com.example.filemanager.common.Constants.TYPE_FOLDER
 import com.example.filemanager.common.Constants.TYPE_UNKNOWN
+import com.example.filemanager.common.Constants.currentPath
+import com.example.filemanager.common.Constants.rootPath
 import com.example.filemanager.model.FileModel
+import com.example.filemanager.model.Search
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
@@ -23,6 +27,85 @@ class MainRepository @Inject constructor(
     val dispatcher: DispatchCoroutineProviders
 ) {
 
+    suspend fun getSearchFile(search: String, searchData: Search): LiveData<List<FileModel>> {
+        return withContext(dispatcher.io) {
+            val result = mutableListOf<File>()
+            when (searchData.searchArea) {
+                "category" -> {
+                    File(rootPath).walk().takeWhile { this.isActive }.forEach {
+
+                        if (it.name.lowercase(Locale.ROOT)
+                                .contains(search.lowercase(Locale.ROOT)) && it.path != rootPath
+                        )
+                            result += it
+                    }
+                }
+                "storage" -> {
+                    File(currentPath).walk().takeWhile { this.isActive }.forEach {
+
+                        if (it.name.lowercase(Locale.ROOT)
+                                .contains(search.lowercase(Locale.ROOT)) && it.path != currentPath
+                        )
+                            result += it
+                    }
+                }
+                "video" -> {
+                    val mutableFileList = mutableListOf<FileModel>()
+                    getVideoFiles(searchData.context!!).value!!.forEach {
+                        if (it.name.lowercase(Locale.ROOT)
+                                .contains(search.lowercase(Locale.ROOT))
+                        ) {
+                            mutableFileList += it
+                        }
+                    }
+                    return@withContext MutableLiveData(
+                        mutableFileList
+                    )
+                }
+                "image" -> {
+                    val mutableFileList = mutableListOf<FileModel>()
+                    getImageFiles(searchData.context!!).value!!.forEach {
+                        if (it.name.lowercase(Locale.ROOT)
+                                .contains(search.lowercase(Locale.ROOT))
+                        ) {
+                            mutableFileList += it
+                        }
+                    }
+                    return@withContext MutableLiveData(
+                        mutableFileList
+                    )
+                }
+                "audio" -> {
+                    val mutableFileList = mutableListOf<FileModel>()
+                    getAudioFiles(searchData.context!!).value!!.forEach {
+                        if (it.name.lowercase(Locale.ROOT)
+                                .contains(search.lowercase(Locale.ROOT))
+                        ) {
+                            mutableFileList += it
+                        }
+                    }
+                    return@withContext MutableLiveData(
+                        mutableFileList
+                    )
+                }
+                "download" -> {
+                    val mutableFileList = mutableListOf<FileModel>()
+                    getDownloadFiles(searchData.context!!).value!!.forEach {
+                        if (it.name.lowercase(Locale.ROOT)
+                                .contains(search.lowercase(Locale.ROOT))
+                        ) {
+                            mutableFileList += it
+                        }
+                    }
+                    return@withContext MutableLiveData(
+                        mutableFileList
+                    )
+                }
+            }
+            makeFile(result)
+
+        }
+    }
 
     suspend fun getFiles(currentPath: String): LiveData<List<FileModel>> {
         return withContext(dispatcher.io)
@@ -333,8 +416,11 @@ class MainRepository @Inject constructor(
                             )
                             val extension = imgName.substring(imgName.lastIndexOf(".") + 1)
                                 ?.toLowerCase(Locale.ROOT)
-                            val mimeType =
+                            var mimeType =
                                 MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+                            if (mimeType == null) {
+                                mimeType = TYPE_UNKNOWN
+                            }
                             downloadList += FileModel(
                                 imgName,
                                 getSize(size),

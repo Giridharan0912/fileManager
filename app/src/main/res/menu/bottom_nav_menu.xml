@@ -3,13 +3,19 @@
     <item
         android:id="@+id/categoryFragment"
         android:icon="@drawable/ic_content"
+        android:iconTint="@android:color/transparent"
         android:title="@string/categories" />
     <item
         android:id="@+id/storageFragment"
         android:icon="@drawable/ic_folder"
-        android:title="@string/storage" />
+        android:iconTint="@android:color/transparent"
+        android:title="@string/storage"
+
+        />
     <item
         android:id="@+id/detailsFragment"
         android:icon="@drawable/ic_detail"
+        android:iconTint="@android:color/transparent"
+
         android:title="@string/details" />
 </menu>
