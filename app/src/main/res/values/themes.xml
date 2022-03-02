@@ -29,4 +29,6 @@
     <item name="bar_text_color" type="color">@color/black</item>
     <item name="img_button_bg" type="color">@color/white</item>
     <color name="cardView_color">@color/pale_white</color>
+    <color name="item_click_color">#CBCBCB</color>
+    <color name="storage_pb_bg">#CBCBCB</color>
 </resources>

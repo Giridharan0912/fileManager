@@ -6,12 +6,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.webkit.MimeTypeMap
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.alphaverse.grocerymart.common.DispatchCoroutineProviders
+import com.example.filemanager.common.Constants.TYPE_AUDIO
+import com.example.filemanager.common.Constants.TYPE_DOWNLOAD
 import com.example.filemanager.common.Constants.TYPE_FOLDER
+import com.example.filemanager.common.Constants.TYPE_IMAGE
 import com.example.filemanager.common.Constants.TYPE_UNKNOWN
+import com.example.filemanager.common.Constants.TYPE_VIDEO
 import com.example.filemanager.common.Constants.currentPath
 import com.example.filemanager.common.Constants.rootPath
 import com.example.filemanager.model.FileModel
@@ -24,10 +27,11 @@ import javax.inject.Inject
 
 
 class MainRepository @Inject constructor(
-    val dispatcher: DispatchCoroutineProviders
+    private val dispatcher: DispatchCoroutineProviders
 ) {
+    private val TAG = MainRepository::class.java.simpleName
 
-    suspend fun getSearchFile(search: String, searchData: Search): LiveData<List<FileModel>> {
+    suspend fun getSearchFile(search: String, searchData: Search): List<FileModel> {
         return withContext(dispatcher.io) {
             val result = mutableListOf<File>()
             when (searchData.searchArea) {
@@ -49,57 +53,49 @@ class MainRepository @Inject constructor(
                             result += it
                     }
                 }
-                "video" -> {
+                TYPE_VIDEO -> {
                     val mutableFileList = mutableListOf<FileModel>()
-                    getVideoFiles(searchData.context!!).value!!.forEach {
+                    getVideoFiles(searchData.context!!).forEach {
                         if (it.name.lowercase(Locale.ROOT)
                                 .contains(search.lowercase(Locale.ROOT))
                         ) {
                             mutableFileList += it
                         }
                     }
-                    return@withContext MutableLiveData(
-                        mutableFileList
-                    )
+                    return@withContext mutableFileList
                 }
-                "image" -> {
+                TYPE_IMAGE -> {
                     val mutableFileList = mutableListOf<FileModel>()
-                    getImageFiles(searchData.context!!).value!!.forEach {
+                    getImageFiles(searchData.context!!).forEach {
                         if (it.name.lowercase(Locale.ROOT)
                                 .contains(search.lowercase(Locale.ROOT))
                         ) {
                             mutableFileList += it
                         }
                     }
-                    return@withContext MutableLiveData(
-                        mutableFileList
-                    )
+                    return@withContext mutableFileList
                 }
-                "audio" -> {
+                TYPE_AUDIO -> {
                     val mutableFileList = mutableListOf<FileModel>()
-                    getAudioFiles(searchData.context!!).value!!.forEach {
+                    getAudioFiles(searchData.context!!).forEach {
                         if (it.name.lowercase(Locale.ROOT)
                                 .contains(search.lowercase(Locale.ROOT))
                         ) {
                             mutableFileList += it
                         }
                     }
-                    return@withContext MutableLiveData(
-                        mutableFileList
-                    )
+                    return@withContext mutableFileList
                 }
-                "download" -> {
+                TYPE_DOWNLOAD -> {
                     val mutableFileList = mutableListOf<FileModel>()
-                    getDownloadFiles(searchData.context!!).value!!.forEach {
+                    getDownloadFiles(searchData.context!!).forEach {
                         if (it.name.lowercase(Locale.ROOT)
                                 .contains(search.lowercase(Locale.ROOT))
                         ) {
                             mutableFileList += it
                         }
                     }
-                    return@withContext MutableLiveData(
-                        mutableFileList
-                    )
+                    return@withContext mutableFileList
                 }
             }
             makeFile(result)
@@ -107,20 +103,27 @@ class MainRepository @Inject constructor(
         }
     }
 
-    suspend fun getFiles(currentPath: String): LiveData<List<FileModel>> {
+    suspend fun getFolderName(currentPath: String): String {
+        return withContext(dispatcher.io) {
+            File(currentPath).name
+
+        }
+    }
+
+    suspend fun getFiles(currentPath: String): List<FileModel> {
         return withContext(dispatcher.io)
         {
             var files = listOf<File>()
             try {
                 files = File(currentPath).listFiles().asList()
             } catch (e: Exception) {
-
+                Log.d(TAG, "getFiles: $e")
             }
             makeFile(files)
         }
     }
 
-    private fun makeFile(fileList: List<File>): LiveData<List<FileModel>> {
+    private fun makeFile(fileList: List<File>): List<FileModel> {
         val mutableFileList = mutableListOf<FileModel>()
 
         if (fileList.isNotEmpty()) {
@@ -155,9 +158,7 @@ class MainRepository @Inject constructor(
                 }
             }
         }
-        return MutableLiveData(
-            mutableFileList
-        )
+        return mutableFileList
     }
 
     private fun getSize(fileSize: Long): String {
@@ -176,7 +177,7 @@ class MainRepository @Inject constructor(
             return String.format("%.1f", size_in_bytes) + "\u00A0B"
     }
 
-    suspend fun getVideoFiles(context: Context): LiveData<List<FileModel>> {
+    suspend fun getVideoFiles(context: Context): List<FileModel> {
         return withContext(dispatcher.io) {
             val collection =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -234,11 +235,11 @@ class MainRepository @Inject constructor(
                 }
                 cursor.close()
             }
-            MutableLiveData(videoList)
+            videoList
         }
     }
 
-    suspend fun getImageFiles(context: Context): LiveData<List<FileModel>> {
+    suspend fun getImageFiles(context: Context): List<FileModel> {
         return withContext(dispatcher.io) {
 
             val collection =
@@ -289,13 +290,15 @@ class MainRepository @Inject constructor(
                             ?.toLowerCase(Locale.ROOT)
                         val mimeType =
                             MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-                        imgList += FileModel(
-                            imgName,
-                            getSize(size),
-                            contentUri.toString(),
-                            mimeType!!,
-                            dateModified * 1000,
-                            true
+                        imgList.add(
+                            FileModel(
+                                imgName,
+                                getSize(size),
+                                contentUri.toString(),
+                                mimeType!!,
+                                dateModified * 1000,
+                                true
+                            )
                         )
                     } while (cursor.moveToNext())
                 }
@@ -303,11 +306,11 @@ class MainRepository @Inject constructor(
 
             }
 
-            MutableLiveData(imgList)
+            imgList
         }
     }
 
-    suspend fun getAudioFiles(context: Context): LiveData<List<FileModel>> {
+    suspend fun getAudioFiles(context: Context): List<FileModel> {
         return withContext(dispatcher.io) {
 
             val collection =
@@ -372,11 +375,11 @@ class MainRepository @Inject constructor(
 
             }
 
-            MutableLiveData(audioList)
+            audioList
         }
     }
 
-    suspend fun getDownloadFiles(context: Context): LiveData<List<FileModel>> {
+    suspend fun getDownloadFiles(context: Context): List<FileModel> {
         return withContext(dispatcher.io) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL)
@@ -435,7 +438,7 @@ class MainRepository @Inject constructor(
 
                 }
 
-                MutableLiveData(downloadList)
+                downloadList
             } else {
                 getFiles(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)!!.path)
             }
@@ -443,7 +446,7 @@ class MainRepository @Inject constructor(
     }
 
 
-    suspend fun getDocumentFiles(context: Context): LiveData<List<FileModel>> {
+    suspend fun getDocumentFiles(context: Context): List<FileModel> {
         return withContext(dispatcher.io) {
             var files = listOf<File>()
             try {

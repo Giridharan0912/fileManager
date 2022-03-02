@@ -11,6 +11,6 @@
     <color name="gray_800">#777575</color>
     <color name="pale_white">#68FFFFFF</color>
     <color name="pale_black">#14000000</color>
-
+    <color name="storage_bg">#4a90e2</color>
 
 </resources>

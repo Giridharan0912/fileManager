@@ -32,6 +32,8 @@
     <item name="bar_text_color" type="color">@color/white</item>
     <item name="img_button_bg" type="color">@color/black</item>
     <color name="cardView_color">@color/pale_black</color>
+    <color name="item_click_color">#565656</color>
+    <color name="storage_pb_bg">#565656</color>
 
 
 </resources>

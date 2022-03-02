@@ -1,11 +1,15 @@
 package com.example.filemanager.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.filemanager.R
+import com.example.filemanager.common.ResponseState
 import com.example.filemanager.model.FileModel
 import com.example.filemanager.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,27 +17,52 @@ import javax.inject.Inject
 class StorageViewModel @Inject constructor(
     private val repo: MainRepository
 ) : ViewModel() {
-    var files = MediatorLiveData<List<FileModel>>()
-
-    fun getFiles(currentPath: String) = viewModelScope.launch {
-        files.addSource(
-            repo.getFiles(currentPath)
-        ) {
-            files.value = it
-        }
-    }
-}
+    var presentFolder = MediatorLiveData<ResponseState<String>>()
+    var files = MediatorLiveData<ResponseState<List<FileModel>>>()
 
 //    fun getFiles(currentPath: String) = viewModelScope.launch {
-//        handleFiles(currentPath)
+//        val a = async { repo.getFiles(currentPath) }
+//        files.addSource(
+//            a.await(), files::setValue
+//        )
 //    }
-//
-//    private suspend fun handleFiles(currentPath: String) {
-//        files.postValue(Resource.Loading())
-//        val op=repo.getFiles(currentPath)
-//
-//
-//    }
+
+    fun getFolderName(currentPath: String, context: Context) = viewModelScope.launch {
+        presentFolder.postValue(ResponseState.Loading())
+        try {
+            var name = repo.getFolderName(currentPath)
+            if (name == "0") {
+                name = context.getString(R.string.app_name)
+            }
+            presentFolder.postValue(ResponseState.Success(name))
+        } catch (e: Exception) {
+            presentFolder.postValue(ResponseState.Failure(message = e.message))
+
+        }
+
+
+    }
+
+    fun getFiles(currentPath: String) = viewModelScope.launch {
+        files.postValue(ResponseState.Loading())
+        fetchFiles(currentPath)
+    }
+
+
+    private fun handleFiles(files: List<FileModel>): ResponseState<List<FileModel>> {
+        return try {
+            ResponseState.Success(files)
+        } catch (e: Exception) {
+            ResponseState.Failure(message = e.message)
+        }
+    }
+
+    private suspend fun fetchFiles(currentPath: String) = viewModelScope.launch {
+
+        val repoFiles = async { repo.getFiles(currentPath) }
+        files.postValue(handleFiles(repoFiles.await()))
+    }
+}
 
 
 

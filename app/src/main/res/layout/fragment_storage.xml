@@ -13,11 +13,11 @@
 
 
     <TextView
-        android:id="@+id/category_head_tv"
+        android:id="@+id/storage_head_tv"
         style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/dimen_start"
         android:text="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/toolbar_guideline_storage"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,9 +28,10 @@
         android:id="@+id/storage_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/img_button_bg"
-        android:src="@drawable/ic_action_search"
+        android:layout_marginEnd="@dimen/dimen_end"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_icon_search"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/toolbar_guideline_storage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,16 +43,19 @@
         app:dividerColor="@color/gray"
         app:dividerThickness="1dp"
         app:layout_constraintBottom_toBottomOf="@id/toolbar_guideline_storage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/toolbar_guideline_storage" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_storage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_guideline_storage" />
+        app:layout_constraintTop_toBottomOf="@id/divider_category" />
 
     <ProgressBar
         android:id="@+id/storage_progress_bar"
@@ -64,4 +68,18 @@
         app:layout_constraintEnd_toEndOf="@id/rv_storage"
         app:layout_constraintStart_toStartOf="@id/rv_storage"
         app:layout_constraintTop_toTopOf="@+id/rv_storage" />
+
+    <TextView
+        android:id="@+id/storage_tv"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_file_text"
+        android:textColor="@color/bar_text_color"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_guideline_storage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

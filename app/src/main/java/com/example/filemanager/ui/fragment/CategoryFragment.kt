@@ -8,7 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.filemanager.MainActivity
 import com.example.filemanager.R
-import com.example.filemanager.model.Search
+import com.example.filemanager.common.Constants.TYPE_AUDIO
+import com.example.filemanager.common.Constants.TYPE_DOCUMENT
+import com.example.filemanager.common.Constants.TYPE_DOWNLOAD
+import com.example.filemanager.common.Constants.TYPE_IMAGE
+import com.example.filemanager.common.Constants.TYPE_VIDEO
 import kotlinx.android.synthetic.main.fragment_categories.*
 
 class CategoryFragment : Fragment(R.layout.fragment_categories) {
@@ -34,21 +38,23 @@ class CategoryFragment : Fragment(R.layout.fragment_categories) {
 
         cv_video.setOnClickListener {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment("video")
+                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment(TYPE_VIDEO)
             findNavController().navigate(
                 action
             )
         }
         cv_image.setOnClickListener {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment("image")
+                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment(TYPE_IMAGE)
             findNavController().navigate(
                 action
             )
         }
         cv_downloads.setOnClickListener {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment("download")
+                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment(
+                    TYPE_DOWNLOAD
+                )
             findNavController().navigate(
                 action
             )
@@ -57,27 +63,21 @@ class CategoryFragment : Fragment(R.layout.fragment_categories) {
         }
         cv_documents.setOnClickListener {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment("document")
+                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment(
+                    TYPE_DOCUMENT
+                )
             findNavController().navigate(
                 action
             )
         }
         cv_audio.setOnClickListener {
             val action =
-                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment("audio")
+                CategoryFragmentDirections.actionCategoryFragmentToCategoryListFragment(TYPE_AUDIO)
             findNavController().navigate(
                 action
             )
         }
-        category_search.setOnClickListener {
-            val bundle: Bundle = Bundle().apply {
-                putSerializable("searchData", Search("category"))
-            }
-            findNavController().navigate(
-                R.id.action_categoryFragment_to_searchFragment, bundle
-            )
 
-        }
         super.onViewCreated(view, savedInstanceState)
     }
 

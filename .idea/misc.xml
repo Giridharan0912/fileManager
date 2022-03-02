@@ -5,12 +5,25 @@
       <map>
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable-anydpi/ic_action_back.xml" value="0.174" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable-anydpi/ic_action_search.xml" value="0.1945" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable-anydpi/ic_icon_back.xml" value="0.208" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable-hdpi/ic_launcher_foreground.xml" value="0.124" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/background_imagebutton_view.xml" value="0.1945" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/bottom_nav_selector.xml" value="0.1955" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/hint_selector.xml" value="0.182" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_content.xml" value="0.208" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_detail.xml" value="0.208" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_folder.xml" value="0.1285" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_audio.xml" value="0.182" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_content.xml" value="0.182" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_image.xml" value="0.136" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_search.xml" value="0.208" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_share.xml" value="0.208" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_video.xml" value="0.208" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_icon_zip.xml" value="0.208" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1945" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.124" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/item_selector.xml" value="0.182" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/drawable/storage_progress_bar.xml" value="0.182" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/edit_text_layout.xml" value="0.20863616930312098" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/fragment_categories.xml" value="0.20863616930312098" />
@@ -18,7 +31,8 @@
         <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/fragment_details.xml" value="0.27447916666666666" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/fragment_search.xml" value="0.20863616930312098" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/fragment_storage.xml" value="0.2105978260869565" />
-        <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/item_file.xml" value="0.20863616930312098" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/item_file.xml" value="0.4" />
+        <entry key="..\:/android_practice/FileManager/app/src/main/res/layout/item_file_selected.xml" value="0.20863616930312098" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/menu/top_bar_menu.xml" value="0.20863616930312098" />
         <entry key="..\:/android_practice/FileManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher_aa.png.xml" value="0.248" />

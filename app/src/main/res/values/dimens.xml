@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dimen_8">8dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_24">24dp</dimen>
+    <dimen name="dimen_32">32dp</dimen>
+    <dimen name="dimen_40">40dp</dimen>
+    <dimen name="dimen_start">16dp</dimen>
+    <dimen name="dimen_end">16dp</dimen>
+    <dimen name="dimen_top">8dp</dimen>
+    <dimen name="dimen_bottom">8dp</dimen>
     <dimen name="cardView_horizontal_margin">8dp</dimen>
     <dimen name="cardView_vertical_margin">12dp</dimen>
-    <dimen name="thumbnail_image_view"
-        >
+    <dimen name="thumbnail_image_view">
         48dp
     </dimen>
-
     <dimen name="cardView_width">120dp</dimen>
     <dimen name="cardView_height">120dp</dimen>
+    <dimen name="cardView_img">48dp</dimen>
+    <dimen name="dimen_4">4dp</dimen>
+    <dimen name="dimen_12">12dp</dimen>
 </resources>

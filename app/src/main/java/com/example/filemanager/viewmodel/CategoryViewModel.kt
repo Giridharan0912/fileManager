@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.filemanager.common.ResponseState
 import com.example.filemanager.model.FileModel
 import com.example.filemanager.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,58 +16,56 @@ import javax.inject.Inject
 class CategoryViewModel @Inject constructor(
     private val repo: MainRepository
 ) : ViewModel() {
-    var videos = MediatorLiveData<List<FileModel>>()
-    var images = MediatorLiveData<List<FileModel>>()
-    var audios = MediatorLiveData<List<FileModel>>()
-    var downloads = MediatorLiveData<List<FileModel>>()
-    var recent = MediatorLiveData<List<FileModel>>()
-    var documents = MediatorLiveData<List<FileModel>>()
+    var presentFolder=MediatorLiveData<ResponseState<String>>()
+    var files = MediatorLiveData<ResponseState<List<FileModel>>>()
 
-    fun getVideos(context: Context) = viewModelScope.launch {
-        videos.addSource(
-            repo.getVideoFiles(context)
-        ) {
-            videos.value = it
-        }
+    fun getFiles(context: Context, type: String) = viewModelScope.launch {
+        fetchFile(context, type)
     }
 
-    fun getImages(context: Context) = viewModelScope.launch {
-        images.addSource(
-            repo.getImageFiles(context)
-        ) {
-            images.value = it
-        }
+    private suspend fun getVideos(context: Context) = viewModelScope.launch {
+        val repoFiles = async { repo.getVideoFiles(context) }
+        files.postValue(handleFiles(repoFiles.await()))
     }
 
-    fun getAudios(context: Context) = viewModelScope.launch {
-        audios.addSource(
-            repo.getAudioFiles(context)
-        ) {
-            audios.value = it
-        }
+    private suspend fun getImages(context: Context) = viewModelScope.launch {
+        val repoFiles = async { repo.getImageFiles(context) }
+        files.postValue(handleFiles(repoFiles.await()))
     }
 
-    fun getDownloads(context: Context) = viewModelScope.launch {
-        downloads.addSource(
-            repo.getDownloadFiles(context)
-        ) {
-            downloads.value = it
-        }
+    private suspend fun getAudios(context: Context) = viewModelScope.launch {
+        val repoFiles = async { repo.getAudioFiles(context) }
+        files.postValue(handleFiles(repoFiles.await()))
     }
 
-    fun getRecent(context: Context) = viewModelScope.launch {
-        recent.addSource(
-            repo.getVideoFiles(context)
-        ) {
-            recent.value = it
-        }
+    private suspend fun getDownloads(context: Context) = viewModelScope.launch {
+        val repoFiles = async { repo.getDownloadFiles(context) }
+        files.postValue(handleFiles(repoFiles.await()))
     }
 
     fun getDocuments(context: Context) = viewModelScope.launch {
-        documents.addSource(
-            repo.getDocumentFiles(context)
-        ) {
-            documents.value = it
+        val repoFiles = async { repo.getDocumentFiles(context) }
+        files.postValue(handleFiles(repoFiles.await()))
+    }
+
+
+    private fun handleFiles(files: List<FileModel>): ResponseState<List<FileModel>> {
+        return try {
+            ResponseState.Success(files)
+        } catch (e: Exception) {
+            ResponseState.Failure(message = e.message)
         }
+    }
+
+    private fun fetchFile(context: Context, type: String) = viewModelScope.launch {
+        files.postValue(ResponseState.Loading())
+        when (type) {
+            "video" -> getVideos(context)
+            "image" -> getImages(context)
+            "audio" -> getAudios(context)
+            "download" -> getDownloads(context)
+            "document" -> getDocuments(context)
+        }
+
     }
 }

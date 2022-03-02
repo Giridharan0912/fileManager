@@ -2,20 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/categoryFragment"
-        android:icon="@drawable/ic_content"
+        android:icon="@drawable/ic_icon_content"
         android:iconTint="@android:color/transparent"
         android:title="@string/categories" />
     <item
         android:id="@+id/storageFragment"
-        android:icon="@drawable/ic_folder"
+        android:icon="@drawable/ic_icon_folder"
         android:iconTint="@android:color/transparent"
         android:title="@string/storage"
 
         />
     <item
         android:id="@+id/detailsFragment"
-        android:icon="@drawable/ic_detail"
+        android:icon="@drawable/ic_icon_detail"
         android:iconTint="@android:color/transparent"
-
         android:title="@string/details" />
 </menu>
