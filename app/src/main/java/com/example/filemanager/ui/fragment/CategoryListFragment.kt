@@ -34,7 +34,6 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
         categoryViewModel.files.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ResponseState.Success -> {
-
                     hideProgressBar()
                     response.data?.let {
                         fileViewAdapter.submitList(it)

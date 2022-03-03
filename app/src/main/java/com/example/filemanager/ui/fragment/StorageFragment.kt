@@ -2,7 +2,9 @@ package com.example.filemanager.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -94,7 +96,7 @@ class StorageFragment : Fragment(R.layout.fragment_storage) {
                     storage_head_tv.text = response.data
                 }
                 is ResponseState.Failure -> {
-                    storage_head_tv.text = "Error"
+                    storage_head_tv.text = getString(R.string.error)
                     Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -108,12 +110,15 @@ class StorageFragment : Fragment(R.layout.fragment_storage) {
                     loadFiles()
                 }
                 TYPE_UNKNOWN -> Operations.openUnknown(it, this.requireActivity())
-                else -> Operations.openFile(it, this.requireActivity())
+                else -> {
+                    Operations.openFile(it, this.requireActivity())
+                    onPause()
+                }
             }
         }
         storage_search.setOnClickListener {
             val bundle: Bundle = Bundle().apply {
-                putSerializable("searchData", Search("storage"))
+                putSerializable(getString(R.string.search_data), Search("storage"))
             }
             findNavController().navigate(
                 R.id.action_storageFragment_to_searchFragment,
@@ -161,4 +166,17 @@ class StorageFragment : Fragment(R.layout.fragment_storage) {
         isLoading = true
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        Log.d(TAG, "onCreateView: ")
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onResume() {
+        loadFiles(currentPath)
+        super.onResume()
+    }
 }

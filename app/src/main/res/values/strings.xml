@@ -14,4 +14,6 @@
     <string name="search">Search</string>
     <string name="search_here">Search Here</string>
     <string name="no_file_text">No Files</string>
+    <string name="error">Error</string>
+    <string name="search_data">searchData</string>
 </resources>
