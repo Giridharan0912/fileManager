@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,11 +31,10 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    val reqCode = 20
+    private val reqCode = 20
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermission()
         }
@@ -101,10 +99,6 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 
 }

@@ -1,78 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/dimen_4"
+    android:backgroundTint="@drawable/item_selector"
+    android:backgroundTintMode="screen">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:focusableInTouchMode="true"
-        android:outlineAmbientShadowColor="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/file_img_view"
+        android:layout_width="@dimen/thumbnail_image_view"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dimen_8"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_icon_folder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_file_name"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tv_file_name"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_8"
+        android:maxLines="1"
+        android:ellipsize="middle"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        app:layout_constraintBottom_toTopOf="@+id/tv_file_info"
+        app:layout_constraintStart_toStartOf="@id/tv_file_info"
+        app:layout_constraintTop_toTopOf="@+id/file_img_view"
+        tools:ignore="EllipsizeMaxLines" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/file_img_view"
-                android:layout_width="@dimen/thumbnail_image_view"
-                android:layout_height="@dimen/thumbnail_image_view"
-                android:layout_marginStart="8dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/icon_folder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical">
+    <TextView
 
-                <TextView
-                    android:id="@+id/tv_file_name"
-                    style="@style/TextAppearance.Material3.BodyLarge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="middle"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:singleLine="true"
-                    android:text="@string/app_name" />
+        android:id="@+id/tv_file_info"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_start"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:text="@string/app_name"
+        android:textColor="@color/gray_800"
+        app:layout_constraintStart_toEndOf="@+id/file_img_view"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_name" />
 
-                <LinearLayout
-                    android:layout_marginTop="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tv_file_last_modified"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_start"
+        android:text="@string/app_name"
+        android:textColor="@color/gray_800"
+        app:layout_constraintStart_toEndOf="@+id/tv_file_info"
+        app:layout_constraintTop_toTopOf="@+id/tv_file_info" />
 
-                    <TextView
-                        android:id="@+id/tv_file_info"
-                        style="@style/TextAppearance.Material3.BodyMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        android:textColor="@color/gray_800" />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_end"
+        android:layout_marginBottom="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_file_last_modified"
+        app:layout_constraintTop_toTopOf="@+id/tv_file_name" />
 
-                    <TextView
-                        android:id="@+id/tv_file_last_modified"
-                        style="@style/TextAppearance.Material3.BodyMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:text="@string/app_name"
-                        android:textColor="@color/gray_800" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,7 +58,9 @@ class FileViewAdapter(context: Context) :
             setThumbnail(holder, fileModel)
             setOnClickListener {
 
-                onItemClickListener?.let { it(fileModel) }
+                onItemClickListener?.let {
+                    it(fileModel)
+                }
             }
         }
 
